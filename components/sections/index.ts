@@ -1,0 +1,9 @@
+export { default as Navbar } from './Navbar';
+export { default as HeroSection } from './HeroSection';
+export { default as ProcessSection } from './ProcessSection';
+export { default as MaterialsSection } from './MaterialsSection';
+export { default as SpecSection } from './SpecSection';
+export { default as TestimonialsSection } from './TestimonialsSection';
+export { default as FaqSection } from './FaqSection';
+export { default as CtaSection } from './CtaSection';
+export { default as Footer } from './Footer';
