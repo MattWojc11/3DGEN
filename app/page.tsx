@@ -6,7 +6,6 @@ import {
   ProcessSection,
   MaterialsSection,
   SpecSection,
-  TestimonialsSection,
   FaqSection,
   CtaSection,
   Footer,
@@ -20,7 +19,6 @@ export default function LandingPage() {
       <ProcessSection />
       <MaterialsSection />
       <SpecSection />
-      <TestimonialsSection />
       <FaqSection />
       <CtaSection />
       <Footer />

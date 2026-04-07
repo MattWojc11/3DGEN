@@ -24,8 +24,9 @@ const TESTIMONIALS = [
 
 export default function TestimonialsSection() {
   return (
-    <section style={{ borderBottom: '1px solid var(--border)', padding: '7rem 2rem', background: 'var(--bg)' }}>
+    <section className="testimonials-section">
       <div className="container" style={{ padding: 0 }}>
+
         <div style={{ marginBottom: '4rem' }}>
           <div className="section-marker">
             <div className="section-marker-line" />
@@ -36,17 +37,9 @@ export default function TestimonialsSection() {
           </h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1px', border: '1px solid var(--border)' }}>
-          {TESTIMONIALS.map((t, i) => (
-            <div key={t.name} style={{
-              background: 'var(--bg-2)', padding: '2.5rem 2rem',
-              borderRight: i < TESTIMONIALS.length - 1 ? '1px solid var(--border)' : 'none',
-              display: 'flex', flexDirection: 'column', gap: '1.25rem',
-              transition: 'background 0.2s',
-            }}
-              onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-3)')}
-              onMouseLeave={e => (e.currentTarget.style.background = 'var(--bg-2)')}
-            >
+        <div className="testimonials-grid">
+          {TESTIMONIALS.map((t) => (
+            <div key={t.name} className="testimonial-card">
               <div style={{ display: 'flex', gap: '3px' }}>
                 {Array.from({ length: t.stars }).map((_, si) => (
                   <Star key={si} size={14} fill="var(--accent)" style={{ color: 'var(--accent)' }} />
@@ -62,6 +55,7 @@ export default function TestimonialsSection() {
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );

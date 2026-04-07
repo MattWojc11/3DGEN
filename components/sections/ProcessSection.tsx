@@ -17,25 +17,20 @@ export default function ProcessSection() {
     const section = sectionRef.current;
     if (!section) return;
 
-    const header = section.querySelector('.process-header') as HTMLElement;
-    const cards = section.querySelectorAll<HTMLElement>('.process-card');
+    const header    = section.querySelector('.process-header') as HTMLElement;
+    const cards     = section.querySelectorAll<HTMLElement>('.process-card-anim');
     const connector = section.querySelector('.process-connector') as HTMLElement;
 
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // Animate header first
           if (header) {
             header.style.opacity = '1';
             header.style.transform = 'translateY(0)';
           }
-          // Animate connector line
           if (connector) {
-            setTimeout(() => {
-              connector.style.transform = 'scaleX(1)';
-            }, 200);
+            setTimeout(() => { connector.style.transform = 'scaleX(1)'; }, 200);
           }
-          // Stagger cards
           cards.forEach((card, i) => {
             setTimeout(() => {
               card.style.opacity = '1';
@@ -45,23 +40,16 @@ export default function ProcessSection() {
           obs.disconnect();
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
     obs.observe(section);
     return () => obs.disconnect();
   }, []);
 
   return (
-    <section
-      id="proces"
-      ref={sectionRef}
-      style={{
-        borderBottom: '1px solid var(--border)',
-        padding: '7rem 2rem',
-        background: 'var(--bg)',
-      }}
-    >
+    <section id="proces" ref={sectionRef} className="process-section">
       <div className="container" style={{ padding: 0 }}>
+
         {/* Header */}
         <div
           className="process-header"
@@ -101,24 +89,18 @@ export default function ProcessSection() {
         </div>
 
         {/* Step cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1px', border: '1px solid var(--border)' }}>
-          {STEPS.map((step, i) => {
+        <div className="process-cards">
+          {STEPS.map((step) => {
             const Icon = step.icon;
             return (
               <div
                 key={step.num}
-                className="process-card"
+                className="process-card-item process-card-anim"
                 style={{
-                  background: 'var(--bg-2)',
-                  padding: '2.5rem 2rem',
-                  borderRight: i < STEPS.length - 1 ? '1px solid var(--border)' : 'none',
-                  position: 'relative',
                   opacity: 0,
                   transform: 'translateY(32px)',
-                  transition: 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s',
+                  transition: 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
-                onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.background = 'var(--bg-3)'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.background = 'var(--bg-2)'; }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem' }}>
                   <Icon size={28} style={{ color: 'var(--accent)' }} />
@@ -130,6 +112,7 @@ export default function ProcessSection() {
             );
           })}
         </div>
+
       </div>
     </section>
   );
