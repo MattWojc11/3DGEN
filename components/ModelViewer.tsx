@@ -38,6 +38,14 @@ function ModelRenderer({ url, color }: { url: string, color: string }) {
     const loader = new STLLoader();
     // Load the geometry from object URL
     loader.load(url, (geo: THREE.BufferGeometry) => {
+      geo.computeBoundingSphere();
+      const radius = geo.boundingSphere?.radius || 1;
+      // Trwale normalizujemy wielkość (skalujemy) samą pierwotną geometrię pliku:
+      // Zapobiega to zmianom wielkości/oddalaniu podczas scrollowania.
+      const scaleFactor = 60 / radius; 
+      geo.center();
+      geo.scale(scaleFactor, scaleFactor, scaleFactor);
+      
       setGeometry(geo);
     });
   }, [url]);
@@ -45,7 +53,7 @@ function ModelRenderer({ url, color }: { url: string, color: string }) {
   if (!geometry) return null;
 
   return (
-    <mesh ref={meshRef} geometry={geometry} scale={[1.25, 1.25, 1.25]} rotation={[-1.2, 0.2, 0.8]}>
+    <mesh ref={meshRef} geometry={geometry} scale={[1, 1, 1]} rotation={[-1.2, 0.2, 0.8]}>
       <meshStandardMaterial color={color} roughness={0.4} metalness={0.1} />
     </mesh>
   );
@@ -65,10 +73,9 @@ export default function ModelViewer({ fileUrl, color }: { fileUrl: string | null
       <Canvas shadows={{ type: THREE.PCFShadowMap }} dpr={[1, 2]} camera={{ position: [0, 0, 150], fov: 50 }}>
         <ambientLight intensity={0.8} />
         <directionalLight position={[10, 10, 10]} intensity={2} castShadow />
-        <Stage intensity={0.5} environment="city" adjustCamera={0.75}>
+        <Stage intensity={0.5} environment="city" adjustCamera={false}>
           <ModelRenderer url={fileUrl} color={color} />
         </Stage>
-        <OrbitControls makeDefault enableZoom={false} enablePan={false} enableRotate={false} />
       </Canvas>
     </div>
   );
