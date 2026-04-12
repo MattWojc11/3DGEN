@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Stage } from '@react-three/drei';
+import { PerspectiveCamera, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 // @ts-expect-error Types for STLLoader can have resolution issues in Next.js strictly depending on configs.
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
@@ -86,13 +86,12 @@ export default function ModelViewer({ fileUrl, color }: { fileUrl: string | null
           style={{ display: 'block', width: '100% !important', height: '100% !important' }}
           shadows={{ type: THREE.PCFShadowMap }}
           dpr={[1, 1.5]}
-          camera={{ position: [0, 0, 150], fov: 50 }}
         >
+          <PerspectiveCamera makeDefault position={[0, 0, 150]} fov={50} />
           <ambientLight intensity={0.8} />
           <directionalLight position={[10, 10, 10]} intensity={2} castShadow />
-          <Stage intensity={0.5} environment="city" adjustCamera={false}>
-            <ModelRenderer url={fileUrl} color={color} />
-          </Stage>
+          <Environment preset="city" />
+          <ModelRenderer url={fileUrl} color={color} />
         </Canvas>
       </div>
     </div>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import ModelViewer from '@/components/ModelViewer';
+import WycenaModelViewer from '@/components/WycenaModelViewer';
 import { UploadCloud, Package, Settings, CreditCard, ChevronLeft, Box, Clock, Layers } from 'lucide-react';
 
 type QuoteResult = {
@@ -196,8 +196,8 @@ export default function WycenaPage() {
 
           ) : (
             /* 3D Viewer */
-            <div style={{ flex: 1, position: 'relative' }}>
-              <ModelViewer fileUrl={fileUrl} color={color} />
+            <div style={{ flex: 1, position: 'relative', minHeight: 0, overflow: 'hidden' }}>
+              <WycenaModelViewer fileUrl={fileUrl} color={color} />
 
               {/* File badge */}
               <div style={{

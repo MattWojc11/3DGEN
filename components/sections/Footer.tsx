@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 import { Box } from 'lucide-react';
 
 export default function Footer() {
@@ -63,16 +64,19 @@ export default function Footer() {
             © {new Date().getFullYear()} 3DGEN STUDIO — WSZELKIE PRAWA ZASTRZEŻONE
           </span>
           <div style={{ display: 'flex', gap: '2rem' }}>
-            {['Polityka Prywatności', 'Regulamin'].map(t => (
-              <a
+            {([
+              ['Polityka Prywatności', '/polityka-prywatnosci'],
+              ['Regulamin', '/regulamin'],
+            ] as [string, string][]).map(([t, href]) => (
+              <Link
                 key={t}
-                href="#"
+                href={href}
                 style={{ color: 'var(--text-muted)', textDecoration: 'none', fontFamily: "'Space Mono', monospace", fontSize: '0.68rem', letterSpacing: '0.05em', transition: 'color 0.15s' }}
                 onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
                 onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
               >
                 {t}
-              </a>
+              </Link>
             ))}
           </div>
         </div>
